@@ -1,0 +1,653 @@
+{
+  "generatedAt": "2026-04-14T01:39:56.471Z",
+  "units": {
+    "massKg": "kg",
+    "meanRadiusKm": "km",
+    "orbitalPeriodYears": "year",
+    "rotationPeriodDays": "day"
+  },
+  "counts": {
+    "planetsAndDwarfs": 13,
+    "satellites": 46
+  },
+  "planets": [
+    {
+      "id": "mercury",
+      "name": "Mercury",
+      "kind": "planet",
+      "massKg": 3.3010299999999994e+23,
+      "meanRadiusKm": 2439.4,
+      "rotationPeriodDays": 58.6462,
+      "orbitalPeriodYears": 0.2408467,
+      "source": "JPL Planetary Physical Parameters"
+    },
+    {
+      "id": "venus",
+      "name": "Venus",
+      "kind": "planet",
+      "massKg": 4.867309999999999e+24,
+      "meanRadiusKm": 6051.8,
+      "rotationPeriodDays": -243.018,
+      "orbitalPeriodYears": 0.61519726,
+      "source": "JPL Planetary Physical Parameters"
+    },
+    {
+      "id": "earth",
+      "name": "Earth",
+      "kind": "planet",
+      "massKg": 5.97217e+24,
+      "meanRadiusKm": 6371.0084,
+      "rotationPeriodDays": 0.99726968,
+      "orbitalPeriodYears": 1.0000174,
+      "source": "JPL Planetary Physical Parameters"
+    },
+    {
+      "id": "mars",
+      "name": "Mars",
+      "kind": "planet",
+      "massKg": 6.41691e+23,
+      "meanRadiusKm": 3389.5,
+      "rotationPeriodDays": 1.02595676,
+      "orbitalPeriodYears": 1.8808476,
+      "source": "JPL Planetary Physical Parameters"
+    },
+    {
+      "id": "jupiter",
+      "name": "Jupiter",
+      "kind": "planet",
+      "massKg": 1.898125e+27,
+      "meanRadiusKm": 69911,
+      "rotationPeriodDays": 0.41354,
+      "orbitalPeriodYears": 11.862615,
+      "source": "JPL Planetary Physical Parameters"
+    },
+    {
+      "id": "saturn",
+      "name": "Saturn",
+      "kind": "planet",
+      "massKg": 5.68317e+26,
+      "meanRadiusKm": 58232,
+      "rotationPeriodDays": 0.44401,
+      "orbitalPeriodYears": 29.447498,
+      "source": "JPL Planetary Physical Parameters"
+    },
+    {
+      "id": "uranus",
+      "name": "Uranus",
+      "kind": "planet",
+      "massKg": 8.68099e+25,
+      "meanRadiusKm": 25362,
+      "rotationPeriodDays": -0.71833,
+      "orbitalPeriodYears": 84.016846,
+      "source": "JPL Planetary Physical Parameters"
+    },
+    {
+      "id": "neptune",
+      "name": "Neptune",
+      "kind": "planet",
+      "massKg": 1.024092e+26,
+      "meanRadiusKm": 24622,
+      "rotationPeriodDays": 0.67125,
+      "orbitalPeriodYears": 164.79132,
+      "source": "JPL Planetary Physical Parameters"
+    },
+    {
+      "id": "ceres",
+      "name": "Ceres",
+      "kind": "dwarf",
+      "massKg": 938416000000000000000,
+      "meanRadiusKm": 469.7,
+      "rotationPeriodDays": 0.37809042,
+      "orbitalPeriodYears": 4.61,
+      "source": "JPL Planetary Physical Parameters"
+    },
+    {
+      "id": "pluto",
+      "name": "Pluto",
+      "kind": "dwarf",
+      "massKg": 1.30246e+22,
+      "meanRadiusKm": 1188.3,
+      "rotationPeriodDays": -6.3872,
+      "orbitalPeriodYears": 247.92065,
+      "source": "JPL Planetary Physical Parameters"
+    },
+    {
+      "id": "eris",
+      "name": "Eris",
+      "kind": "dwarf",
+      "massKg": 1.66e+22,
+      "meanRadiusKm": 1200,
+      "rotationPeriodDays": 1.079,
+      "orbitalPeriodYears": 557.56,
+      "source": "JPL Planetary Physical Parameters"
+    },
+    {
+      "id": "makemake",
+      "name": "Makemake",
+      "kind": "dwarf",
+      "massKg": 3.1e+21,
+      "meanRadiusKm": 714,
+      "rotationPeriodDays": 0.937,
+      "orbitalPeriodYears": 307.54,
+      "source": "JPL Planetary Physical Parameters"
+    },
+    {
+      "id": "haumea",
+      "name": "Haumea",
+      "kind": "dwarf",
+      "massKg": 4.006e+21,
+      "meanRadiusKm": 715,
+      "rotationPeriodDays": 0.1631,
+      "orbitalPeriodYears": 284.81,
+      "source": "JPL Planetary Physical Parameters"
+    }
+  ],
+  "satellites": [
+    {
+      "id": "moon",
+      "name": "Moon",
+      "kind": "satellite",
+      "parentName": "Earth",
+      "gmKm3s2": 4902.8,
+      "massKg": 7.3457890715131185e+22,
+      "meanRadiusKm": 1737.4,
+      "densityGcm3": 3.344,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "phobos",
+      "name": "Phobos",
+      "kind": "satellite",
+      "parentName": "Mars",
+      "gmKm3s2": 0.0007087,
+      "massKg": 10618341998411820,
+      "meanRadiusKm": 11.08,
+      "densityGcm3": 1.872,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "deimos",
+      "name": "Deimos",
+      "kind": "satellite",
+      "parentName": "Mars",
+      "gmKm3s2": 0.0000962,
+      "massKg": 1441349654645431,
+      "meanRadiusKm": 6.2,
+      "densityGcm3": 1.471,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "io",
+      "name": "Io",
+      "kind": "satellite",
+      "parentName": "Jupiter",
+      "gmKm3s2": 5959.91547,
+      "massKg": 8.929648757173038e+22,
+      "meanRadiusKm": 1821.49,
+      "densityGcm3": 3.5276,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "europa",
+      "name": "Europa",
+      "kind": "satellite",
+      "parentName": "Jupiter",
+      "gmKm3s2": 3202.7121,
+      "massKg": 4.7985737830184444e+22,
+      "meanRadiusKm": 1560.8,
+      "densityGcm3": 3.013,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "ganymede",
+      "name": "Ganymede",
+      "kind": "satellite",
+      "parentName": "Jupiter",
+      "gmKm3s2": 9887.83275,
+      "massKg": 1.4814786194806948e+23,
+      "meanRadiusKm": 2631.2,
+      "densityGcm3": 1.9416,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "callisto",
+      "name": "Callisto",
+      "kind": "satellite",
+      "parentName": "Jupiter",
+      "gmKm3s2": 7179.2834,
+      "massKg": 1.075660878294353e+23,
+      "meanRadiusKm": 2410.3,
+      "densityGcm3": 1.834,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "amalthea",
+      "name": "Amalthea",
+      "kind": "satellite",
+      "parentName": "Jupiter",
+      "gmKm3s2": 0.16456,
+      "massKg": 2465576914432974300,
+      "meanRadiusKm": 83.5,
+      "densityGcm3": 1.0111,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "thebe",
+      "name": "Thebe",
+      "kind": "satellite",
+      "parentName": "Jupiter",
+      "gmKm3s2": 0.03015,
+      "massKg": 451732765982949570,
+      "meanRadiusKm": 49.3,
+      "densityGcm3": 0.9,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "adrastea",
+      "name": "Adrastea",
+      "kind": "satellite",
+      "parentName": "Jupiter",
+      "gmKm3s2": 0.00014,
+      "massKg": 2097598250003746,
+      "meanRadiusKm": 8.2,
+      "densityGcm3": 0.9018,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "metis",
+      "name": "Metis",
+      "kind": "satellite",
+      "parentName": "Jupiter",
+      "gmKm3s2": 0.0025,
+      "massKg": 37457111607209750,
+      "meanRadiusKm": 21.5,
+      "densityGcm3": 0.9002,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "himalia",
+      "name": "Himalia",
+      "kind": "satellite",
+      "parentName": "Jupiter",
+      "gmKm3s2": 0.15155,
+      "massKg": 2270650105629055000,
+      "meanRadiusKm": 85,
+      "densityGcm3": 0.8827,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "mimas",
+      "name": "Mimas",
+      "kind": "satellite",
+      "parentName": "Saturn",
+      "gmKm3s2": 2.50349,
+      "massKg": 37509401735013420000,
+      "meanRadiusKm": 198.2,
+      "densityGcm3": 1.1501,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "enceladus",
+      "name": "Enceladus",
+      "kind": "satellite",
+      "parentName": "Saturn",
+      "gmKm3s2": 7.21037,
+      "massKg": 108031853527710780000,
+      "meanRadiusKm": 252.1,
+      "densityGcm3": 1.6097,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "tethys",
+      "name": "Tethys",
+      "kind": "satellite",
+      "parentName": "Saturn",
+      "gmKm3s2": 41.21353,
+      "massKg": 617495917174834900000,
+      "meanRadiusKm": 531.1,
+      "densityGcm3": 0.984,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "dione",
+      "name": "Dione",
+      "kind": "satellite",
+      "parentName": "Saturn",
+      "gmKm3s2": 73.11607,
+      "massKg": 1.0954867177082242e+21,
+      "meanRadiusKm": 561.4,
+      "densityGcm3": 1.4781,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "rhea",
+      "name": "Rhea",
+      "kind": "satellite",
+      "parentName": "Saturn",
+      "gmKm3s2": 153.94175,
+      "massKg": 2.3064853243036725e+21,
+      "meanRadiusKm": 763.5,
+      "densityGcm3": 1.2372,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "titan",
+      "name": "Titan",
+      "kind": "satellite",
+      "parentName": "Saturn",
+      "gmKm3s2": 8978.1371,
+      "massKg": 1.3451803335181219e+23,
+      "meanRadiusKm": 2574.76,
+      "densityGcm3": 1.8814,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "hyperion",
+      "name": "Hyperion",
+      "kind": "satellite",
+      "parentName": "Saturn",
+      "gmKm3s2": 0.37049,
+      "massKg": 5550994111742055000,
+      "meanRadiusKm": 135,
+      "densityGcm3": 0.5386,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "iapetus",
+      "name": "Iapetus",
+      "kind": "satellite",
+      "parentName": "Saturn",
+      "gmKm3s2": 120.51511,
+      "massKg": 1.805659170250064e+21,
+      "meanRadiusKm": 734.3,
+      "densityGcm3": 1.0887,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "phoebe",
+      "name": "Phoebe",
+      "kind": "satellite",
+      "parentName": "Saturn",
+      "gmKm3s2": 0.55479,
+      "massKg": 8312332379425559000,
+      "meanRadiusKm": 106.5,
+      "densityGcm3": 1.6428,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "janus",
+      "name": "Janus",
+      "kind": "satellite",
+      "parentName": "Saturn",
+      "gmKm3s2": 0.12662,
+      "massKg": 1897127788681959700,
+      "meanRadiusKm": 89.2,
+      "densityGcm3": 0.6381,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "epimetheus",
+      "name": "Epimetheus",
+      "kind": "satellite",
+      "parentName": "Saturn",
+      "gmKm3s2": 0.03514,
+      "massKg": 526497160750940200,
+      "meanRadiusKm": 58.2,
+      "densityGcm3": 0.6375,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "helene",
+      "name": "Helene",
+      "kind": "satellite",
+      "parentName": "Saturn",
+      "gmKm3s2": 0.00048,
+      "massKg": 7191765428584272,
+      "meanRadiusKm": 18,
+      "densityGcm3": 0.2918,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "atlas",
+      "name": "Atlas",
+      "kind": "satellite",
+      "parentName": "Saturn",
+      "gmKm3s2": 0.00037,
+      "massKg": 5543652517867043,
+      "meanRadiusKm": 15.1,
+      "densityGcm3": 0.385,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "prometheus",
+      "name": "Prometheus",
+      "kind": "satellite",
+      "parentName": "Saturn",
+      "gmKm3s2": 0.01071,
+      "massKg": 160466266125286560,
+      "meanRadiusKm": 43.1,
+      "densityGcm3": 0.4784,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "pandora",
+      "name": "Pandora",
+      "kind": "satellite",
+      "parentName": "Saturn",
+      "gmKm3s2": 0.00926,
+      "massKg": 138741141393104910,
+      "meanRadiusKm": 40.6,
+      "densityGcm3": 0.4948,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "pan",
+      "name": "Pan",
+      "kind": "satellite",
+      "parentName": "Saturn",
+      "gmKm3s2": 0.00028,
+      "massKg": 4195196500007492,
+      "meanRadiusKm": 14,
+      "densityGcm3": 0.365,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "ariel",
+      "name": "Ariel",
+      "kind": "satellite",
+      "parentName": "Uranus",
+      "gmKm3s2": 83.5,
+      "massKg": 1.2510675276808056e+21,
+      "meanRadiusKm": 578.9,
+      "densityGcm3": 1.539,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "umbriel",
+      "name": "Umbriel",
+      "kind": "satellite",
+      "parentName": "Uranus",
+      "gmKm3s2": 85.1,
+      "massKg": 1.27504007910942e+21,
+      "meanRadiusKm": 584.7,
+      "densityGcm3": 1.523,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "titania",
+      "name": "Titania",
+      "kind": "satellite",
+      "parentName": "Uranus",
+      "gmKm3s2": 226.9,
+      "massKg": 3.3996074494703567e+21,
+      "meanRadiusKm": 788.9,
+      "densityGcm3": 1.653,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "oberon",
+      "name": "Oberon",
+      "kind": "satellite",
+      "parentName": "Uranus",
+      "gmKm3s2": 205.3,
+      "massKg": 3.075978005184065e+21,
+      "meanRadiusKm": 761.4,
+      "densityGcm3": 1.664,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "miranda",
+      "name": "Miranda",
+      "kind": "satellite",
+      "parentName": "Uranus",
+      "gmKm3s2": 4.3,
+      "massKg": 64426231964400770000,
+      "meanRadiusKm": 235.8,
+      "densityGcm3": 1.178,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "triton",
+      "name": "Triton",
+      "kind": "satellite",
+      "parentName": "Neptune",
+      "gmKm3s2": 1428.49546,
+      "massKg": 2.1402925550244972e+22,
+      "meanRadiusKm": 1352.6,
+      "densityGcm3": 2.0649,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "nereid",
+      "name": "Nereid",
+      "kind": "satellite",
+      "parentName": "Neptune",
+      "gmKm3s2": 0,
+      "massKg": 0,
+      "meanRadiusKm": 170,
+      "densityGcm3": null,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "naiad",
+      "name": "Naiad",
+      "kind": "satellite",
+      "parentName": "Neptune",
+      "gmKm3s2": 0.00853,
+      "massKg": 127803664803799660,
+      "meanRadiusKm": 29,
+      "densityGcm3": 1.2511,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "thalassa",
+      "name": "Thalassa",
+      "kind": "satellite",
+      "parentName": "Neptune",
+      "gmKm3s2": 0.02359,
+      "massKg": 353445305125631170,
+      "meanRadiusKm": 40,
+      "densityGcm3": 1.3184,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "despina",
+      "name": "Despina",
+      "kind": "satellite",
+      "parentName": "Neptune",
+      "gmKm3s2": 0.11673,
+      "massKg": 1748947455163837700,
+      "meanRadiusKm": 74,
+      "densityGcm3": 1.0304,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "galatea",
+      "name": "Galatea",
+      "kind": "satellite",
+      "parentName": "Neptune",
+      "gmKm3s2": 0.1899,
+      "massKg": 2845242197683652600,
+      "meanRadiusKm": 79,
+      "densityGcm3": 1.3777,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "larissa",
+      "name": "Larissa",
+      "kind": "satellite",
+      "parentName": "Neptune",
+      "gmKm3s2": 0.25484,
+      "massKg": 3818228128792533000,
+      "meanRadiusKm": 96,
+      "densityGcm3": 1.0303,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "proteus",
+      "name": "Proteus",
+      "kind": "satellite",
+      "parentName": "Neptune",
+      "gmKm3s2": 2.58342,
+      "massKg": 38706980507319120000,
+      "meanRadiusKm": 208,
+      "densityGcm3": 1.0269,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "charon",
+      "name": "Charon",
+      "kind": "satellite",
+      "parentName": "Pluto",
+      "gmKm3s2": 106.1,
+      "massKg": 1.5896798166099818e+21,
+      "meanRadiusKm": 606,
+      "densityGcm3": 1.853,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "nix",
+      "name": "Nix",
+      "kind": "satellite",
+      "parentName": "Pluto",
+      "gmKm3s2": 0.0015,
+      "massKg": 22474266964325850,
+      "meanRadiusKm": 18,
+      "densityGcm3": 0.88,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "hydra",
+      "name": "Hydra",
+      "kind": "satellite",
+      "parentName": "Pluto",
+      "gmKm3s2": 0.002,
+      "massKg": 29965689285767800,
+      "meanRadiusKm": 18.5,
+      "densityGcm3": 1.21,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "kerberos",
+      "name": "Kerberos",
+      "kind": "satellite",
+      "parentName": "Pluto",
+      "gmKm3s2": 0.0002,
+      "massKg": 2996568928576780,
+      "meanRadiusKm": 6,
+      "densityGcm3": null,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    },
+    {
+      "id": "styx",
+      "name": "Styx",
+      "kind": "satellite",
+      "parentName": "Pluto",
+      "gmKm3s2": 0.0003,
+      "massKg": 4494853392865170,
+      "meanRadiusKm": 5.2,
+      "densityGcm3": null,
+      "source": "JPL Planetary Satellite Physical Parameters"
+    }
+  ]
+}

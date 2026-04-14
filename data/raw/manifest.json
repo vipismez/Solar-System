@@ -1,0 +1,23 @@
+[
+  {
+    "name": "planetary-physical-parameters",
+    "url": "https://ssd.jpl.nasa.gov/planets/phys_par.html",
+    "file": "planetary-physical-parameters.html",
+    "bytes": 58238,
+    "fetchedAt": "2026-04-14T01:38:36.677Z"
+  },
+  {
+    "name": "satellite-physical-parameters",
+    "url": "https://ssd.jpl.nasa.gov/sats/phys_par/",
+    "file": "satellite-physical-parameters.html",
+    "bytes": 95625,
+    "fetchedAt": "2026-04-14T01:38:36.677Z"
+  },
+  {
+    "name": "small-body-database",
+    "url": "https://ssd.jpl.nasa.gov/sbdb.cgi",
+    "file": "small-body-database.html",
+    "bytes": 17487,
+    "fetchedAt": "2026-04-14T01:38:36.677Z"
+  }
+]

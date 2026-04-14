@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/components/bodyinfopanel.tsx","./src/components/solarsystemscene.tsx","./src/data/celestialdata.ts","./src/types/celestial.ts","./src/utils/orbit.ts"],"version":"5.9.3"}
