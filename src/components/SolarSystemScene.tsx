@@ -126,6 +126,7 @@ function OrbitalBody({
     }
 
     if (meshRef.current) {
+      // rotationPeriodDays < 0 代表逆行自转。
       const sign = effectiveRotationPeriodDays < 0 ? -1 : 1;
       const periodAbs = Math.max(Math.abs(effectiveRotationPeriodDays), 0.01);
       const simulatedDaysDelta = delta * timeScale * 0.08 * 365.25 * selfRotationScale;
@@ -210,6 +211,7 @@ function SceneContent(props: SceneProps) {
   const sunRadiusCap = Math.max(orbitalDistanceToUnits(mercuryPerihelionAu, props.orbitScale) * 0.28, 0.2);
 
   useEffect(() => {
+    // 定位请求是一次性事件：收到请求时开始平滑过渡，完成后自动释放控制。
     pendingFocusRef.current = props.focusBodyId;
     focusElapsedRef.current = 0;
   }, [props.focusBodyId, props.focusSignal]);
@@ -282,6 +284,7 @@ function SceneContent(props: SceneProps) {
         camera.position.lerp(desiredCameraPosition, 0.16);
         controls.update();
 
+        // 到达阈值或超时后结束自动定位，避免“锁定视角”。
         if (camera.position.distanceTo(desiredCameraPosition) < 0.08 || focusElapsedRef.current > 1.25) {
           pendingFocusRef.current = null;
           focusElapsedRef.current = 0;

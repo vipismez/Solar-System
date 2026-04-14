@@ -15,6 +15,7 @@ function App() {
     focusBodyIdRef.current = focusBodyId;
   }, [focusBodyId]);
 
+  // 为“上一个/下一个”构建稳定顺序，避免每次渲染顺序漂移。
   const orderedBodies = useMemo(() => {
     const kindOrder: Record<string, number> = {
       star: 0,
@@ -37,12 +38,14 @@ function App() {
     [orderedBodies]
   );
 
+  // 每次触发定位都递增 focusSignal，驱动场景执行一次性相机跳转。
   const triggerFocus = (id: string) => {
     setFocusBodyId(id);
     setSelectedBodyId(id);
     setFocusSignal((prev) => prev + 1);
   };
 
+  // 使用 ref 读取最新焦点，规避 Leva button 回调闭包滞后。
   const stepFocus = (step: -1 | 1) => {
     const currentId = focusBodyIdRef.current ?? "earth";
     const currentIndex = orderedBodies.findIndex((body) => body.id === currentId);
