@@ -7,6 +7,8 @@ export interface CelestialBody {
   parentId?: string;
   massKg: number;
   meanRadiusKm: number;
+  rotationPeriodDays?: number;
+  axialTiltDeg?: number;
   semiMajorAxisAu?: number;
   orbitalPeriodYears?: number;
   eccentricity?: number;

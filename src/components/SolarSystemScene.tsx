@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+﻿import { useEffect, useMemo, useRef, useState } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Html, OrbitControls, Stars } from "@react-three/drei";
 import * as THREE from "three";
 import type { Mesh } from "three";
@@ -11,13 +11,17 @@ interface SceneProps {
   showLabels: boolean;
   showOrbits: boolean;
   timeScale: number;
+  selfRotationScale: number;
   bodyScale: number;
+  sunScale: number;
   orbitScale: number;
   satelliteDensity: number;
   paused: boolean;
   resetSignal: number;
   selectedBodyId: string | null;
   onSelectBody: (id: string | null) => void;
+  focusBodyId: string | null;
+  focusSignal: number;
 }
 
 const AU_TO_UNITS = 28;
@@ -31,6 +35,29 @@ function radiusToUnits(radiusKm: number, bodyScale: number): number {
 
 function orbitalDistanceToUnits(au: number, orbitScale: number): number {
   return au * AU_TO_UNITS * orbitScale;
+}
+
+function displayOrbitRadius(
+  body: CelestialBody,
+  parent: CelestialBody | undefined,
+  bodyScale: number,
+  orbitScale: number,
+  satelliteDensity: number
+): number {
+  const baseAu = (body.semiMajorAxisAu ?? 0) * (body.kind === "satellite" ? 1.2 / satelliteDensity : 1);
+  const physicalA = orbitalDistanceToUnits(baseAu, orbitScale);
+
+  if (body.kind !== "satellite" || !parent) {
+    return physicalA;
+  }
+
+  const parentRadius = radiusToUnits(parent.meanRadiusKm, bodyScale);
+  const satelliteRadius = radiusToUnits(body.meanRadiusKm, bodyScale);
+
+  // 卫星轨道采用“物理值 + 可见下限”混合，避免被母星球体遮挡。
+  const minVisibleOrbit = parentRadius + satelliteRadius + 0.18;
+  const minOrbitTrack = parentRadius * 1.7 + satelliteRadius * 1.2;
+  return Math.max(physicalA * 6, minVisibleOrbit, minOrbitTrack);
 }
 
 function OrbitPath({
@@ -62,6 +89,11 @@ function OrbitalBody({
   body,
   position,
   bodyScale,
+  sunScale,
+  sunRadiusCap,
+  timeScale,
+  selfRotationScale,
+  paused,
   showLabels,
   highlighted,
   onSelect
@@ -69,27 +101,42 @@ function OrbitalBody({
   body: CelestialBody;
   position: THREE.Vector3;
   bodyScale: number;
+  sunScale: number;
+  sunRadiusCap: number;
+  timeScale: number;
+  selfRotationScale: number;
+  paused: boolean;
   showLabels: boolean;
   highlighted: boolean;
   onSelect: (id: string) => void;
 }) {
   const meshRef = useRef<Mesh>(null);
-
   const isSun = body.id === "sun";
 
-  const radius = radiusToUnits(body.meanRadiusKm, bodyScale);
+  const rawRadius = radiusToUnits(body.meanRadiusKm, bodyScale) * (isSun ? sunScale : 1);
+  const radius = isSun ? Math.min(rawRadius, sunRadiusCap) : rawRadius;
 
-  useFrame(() => {
+  const effectiveRotationPeriodDays =
+    body.rotationPeriodDays ??
+    (body.kind === "satellite" && body.orbitalPeriodYears ? body.orbitalPeriodYears * 365.25 : 1);
+
+  useFrame((_, delta) => {
+    if (paused || selfRotationScale <= 0) {
+      return;
+    }
+
     if (meshRef.current) {
-      meshRef.current.rotation.y += isSun ? 0.003 : 0.01;
+      const sign = effectiveRotationPeriodDays < 0 ? -1 : 1;
+      const periodAbs = Math.max(Math.abs(effectiveRotationPeriodDays), 0.01);
+      const simulatedDaysDelta = delta * timeScale * 0.08 * 365.25 * selfRotationScale;
+      meshRef.current.rotation.y += sign * ((simulatedDaysDelta / periodAbs) * Math.PI * 2);
     }
   });
 
   return (
-    <group>
+    <group position={position} rotation={[0, 0, THREE.MathUtils.degToRad(body.axialTiltDeg ?? 0)]}>
       <mesh
         ref={meshRef}
-        position={position}
         onClick={(event) => {
           event.stopPropagation();
           onSelect(body.id);
@@ -144,6 +191,7 @@ function AsteroidBelt({ orbitScale }: { orbitScale: number }) {
 }
 
 function SceneContent(props: SceneProps) {
+  const { camera } = useThree();
   const [time, setTime] = useState(0);
   const simulationTimeRef = useRef(0);
   const uiSyncAccumulatorRef = useRef(0);
@@ -151,19 +199,20 @@ function SceneContent(props: SceneProps) {
   const nonSunBodies = celestialBodies.filter((b) => b.id !== "sun");
 
   const bodyMap = useMemo(() => new Map(celestialBodies.map((b) => [b.id, b])), []);
+  const mercury = bodyMap.get("mercury");
   const positionMapRef = useRef<Record<string, THREE.Vector3>>({});
+  const controlsRef = useRef<any>(null);
+  const pendingFocusRef = useRef<string | null>(null);
+  const focusElapsedRef = useRef(0);
 
-  useFrame((_, delta) => {
-    if (!props.paused) {
-      simulationTimeRef.current += delta * props.timeScale * 0.08;
-    }
-    uiSyncAccumulatorRef.current += delta;
+  // 太阳显示上限：不超过水星近日点轨道半径的 28%，避免内太阳系在缩放时被遮挡。
+  const mercuryPerihelionAu = (mercury?.semiMajorAxisAu ?? 0.387) * (1 - (mercury?.eccentricity ?? 0.2056));
+  const sunRadiusCap = Math.max(orbitalDistanceToUnits(mercuryPerihelionAu, props.orbitScale) * 0.28, 0.2);
 
-    if (uiSyncAccumulatorRef.current >= 1 / 30) {
-      setTime(simulationTimeRef.current);
-      uiSyncAccumulatorRef.current = 0;
-    }
-  });
+  useEffect(() => {
+    pendingFocusRef.current = props.focusBodyId;
+    focusElapsedRef.current = 0;
+  }, [props.focusBodyId, props.focusSignal]);
 
   useEffect(() => {
     simulationTimeRef.current = 0;
@@ -191,9 +240,7 @@ function SceneContent(props: SceneProps) {
     const meanAnomaly = ((time / orbitalYears) % 1) * Math.PI * 2;
     const e = body.eccentricity ?? 0;
     const inclination = THREE.MathUtils.degToRad(body.inclinationDeg ?? 0);
-    const orbitScale = body.kind === "satellite" ? props.orbitScale * 0.12 : props.orbitScale;
-    const aAu = (body.semiMajorAxisAu ?? 0) * (body.kind === "satellite" ? 1.2 / props.satelliteDensity : 1);
-    const a = orbitalDistanceToUnits(aAu, orbitScale);
+    const a = displayOrbitRadius(body, parent, props.bodyScale, props.orbitScale, props.satelliteDensity);
     const local = keplerPosition(a, e, meanAnomaly);
 
     const y = local.z * Math.sin(inclination);
@@ -207,6 +254,47 @@ function SceneContent(props: SceneProps) {
     resolvePosition(body);
   });
 
+  useFrame((_, delta) => {
+    if (!props.paused) {
+      simulationTimeRef.current += delta * props.timeScale * 0.08;
+    }
+    uiSyncAccumulatorRef.current += delta;
+
+    const focusId = pendingFocusRef.current;
+    if (focusId) {
+      focusElapsedRef.current += delta;
+      const targetPosition = positionMapRef.current[focusId];
+      const targetBody = bodyMap.get(focusId);
+
+      if (targetPosition && targetBody && controlsRef.current) {
+        const controls = controlsRef.current;
+        const targetRadius = radiusToUnits(targetBody.meanRadiusKm, props.bodyScale);
+        const idealDistance = THREE.MathUtils.clamp(targetRadius * 14, 2.5, 120);
+        const currentDir = camera.position.clone().sub(controls.target);
+
+        if (currentDir.lengthSq() < 1e-6) {
+          currentDir.set(1, 0.35, 1);
+        }
+        currentDir.normalize();
+
+        const desiredCameraPosition = targetPosition.clone().add(currentDir.multiplyScalar(idealDistance));
+        controls.target.lerp(targetPosition, 0.16);
+        camera.position.lerp(desiredCameraPosition, 0.16);
+        controls.update();
+
+        if (camera.position.distanceTo(desiredCameraPosition) < 0.08 || focusElapsedRef.current > 1.25) {
+          pendingFocusRef.current = null;
+          focusElapsedRef.current = 0;
+        }
+      }
+    }
+
+    if (uiSyncAccumulatorRef.current >= 1 / 30) {
+      setTime(simulationTimeRef.current);
+      uiSyncAccumulatorRef.current = 0;
+    }
+  });
+
   return (
     <>
       <ambientLight intensity={0.35} />
@@ -217,6 +305,11 @@ function SceneContent(props: SceneProps) {
         body={sun}
         position={new THREE.Vector3(0, 0, 0)}
         bodyScale={props.bodyScale}
+        sunScale={props.sunScale}
+        sunRadiusCap={sunRadiusCap}
+        timeScale={props.timeScale}
+        selfRotationScale={props.selfRotationScale}
+        paused={props.paused}
         showLabels={props.showLabels}
         highlighted={props.selectedBodyId === sun.id}
         onSelect={props.onSelectBody}
@@ -227,9 +320,8 @@ function SceneContent(props: SceneProps) {
         const parentPosition = body.parentId
           ? positionMapRef.current[body.parentId] ?? new THREE.Vector3(0, 0, 0)
           : new THREE.Vector3(0, 0, 0);
-        const orbitScale = body.kind === "satellite" ? props.orbitScale * 0.12 : props.orbitScale;
-        const aAu = (body.semiMajorAxisAu ?? 0) * (body.kind === "satellite" ? 1.2 / props.satelliteDensity : 1);
-        const a = orbitalDistanceToUnits(aAu, orbitScale);
+        const parent = body.parentId ? bodyMap.get(body.parentId) : undefined;
+        const a = displayOrbitRadius(body, parent, props.bodyScale, props.orbitScale, props.satelliteDensity);
         const e = body.eccentricity ?? 0;
         const inclination = THREE.MathUtils.degToRad(body.inclinationDeg ?? 0);
         const shouldShowSatellite = body.kind !== "satellite" || props.satelliteDensity >= 0.3;
@@ -240,13 +332,18 @@ function SceneContent(props: SceneProps) {
 
         return (
           <group key={body.id}>
-            {props.showOrbits && a > 0.06 && (
+            {props.showOrbits && a > (body.kind === "satellite" ? 0.01 : 0.06) && (
               <OrbitPath a={a} eccentricity={e} inclination={inclination} parentPosition={parentPosition} />
             )}
             <OrbitalBody
               body={body}
               position={position}
               bodyScale={props.bodyScale}
+              sunScale={props.sunScale}
+              sunRadiusCap={sunRadiusCap}
+              timeScale={props.timeScale}
+              selfRotationScale={props.selfRotationScale}
+              paused={props.paused}
               showLabels={props.showLabels && (body.kind !== "satellite" || props.satelliteDensity >= 0.7)}
               highlighted={props.selectedBodyId === body.id}
               onSelect={props.onSelectBody}
@@ -256,14 +353,29 @@ function SceneContent(props: SceneProps) {
       })}
 
       <AsteroidBelt orbitScale={props.orbitScale} />
-      <OrbitControls enablePan={true} enableDamping={true} dampingFactor={0.05} />
+      <OrbitControls
+        ref={controlsRef}
+        enablePan={true}
+        enableDamping={true}
+        dampingFactor={0.05}
+        minDistance={10}
+        maxDistance={3600}
+        zoomSpeed={0.9}
+        onStart={() => {
+          pendingFocusRef.current = null;
+          focusElapsedRef.current = 0;
+        }}
+      />
     </>
   );
 }
 
 export function SolarSystemScene(props: SceneProps) {
   return (
-    <Canvas camera={{ position: [0, 95, 180], fov: 55 }} onPointerMissed={() => props.onSelectBody(null)}>
+    <Canvas
+      camera={{ position: [0, 220, 520], fov: 50, near: 0.1, far: 8000 }}
+      onPointerMissed={() => props.onSelectBody(null)}
+    >
       <color attach="background" args={["#010307"]} />
       <SceneContent {...props} />
     </Canvas>
